@@ -89,8 +89,8 @@ class OrgChart<E> extends StatefulWidget {
     Paint? linePaint,
     this.cornerRadius = 10.0,
     this.transformationController,
-     this.minScale = 0.001,
-     this.maxScale = 5.6,
+    this.minScale = 0.001,
+    this.maxScale = 5.6,
   }) {
     if (linePaint != null) {
       this.linePaint = linePaint;
@@ -136,6 +136,7 @@ class _OrgChartState<E> extends State<OrgChart<E>> {
           clipBehavior: Clip.none,
           children: [
             CustomPaint(
+              key: UniqueKey(),
               size: MediaQuery.of(context).size,
               painter: EdgePainter<E>(
                 controller: widget.controller,
@@ -159,7 +160,7 @@ class _OrgChartState<E> extends State<OrgChart<E>> {
       Node<E> node = nodesToDraw[i];
 
       widgets.add(CustomAnimatedPositioned(
-          key: Key("ID: ${widget.controller.idProvider(node.data)}"),
+          key: UniqueKey(),
           isBeingDragged: draggedID == widget.controller.idProvider(node.data),
           curve: widget.curve,
           duration:
