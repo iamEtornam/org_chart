@@ -1,9 +1,9 @@
-library org_chart;
+library;
 
 import 'package:flutter/material.dart';
-import 'package:org_chart/edge_painter.dart';
-import 'package:org_chart/custom_animated_positioned.dart';
 import 'package:org_chart/controller.dart';
+import 'package:org_chart/custom_animated_positioned.dart';
+import 'package:org_chart/edge_painter.dart';
 import 'package:org_chart/node.dart';
 
 export 'controller.dart';
@@ -68,6 +68,12 @@ class OrgChart<E> extends StatefulWidget {
   /// The builder function used to build the nodes
   final Widget Function(NodeBuilderDetails<E> details) builder;
 
+  final TransformationController? transformationController;
+
+  final double minScale;
+
+  final double maxScale;
+
   OrgChart({
     super.key,
     required this.controller,
@@ -82,6 +88,9 @@ class OrgChart<E> extends StatefulWidget {
     this.duration = 700,
     Paint? linePaint,
     this.cornerRadius = 10.0,
+    this.transformationController,
+     this.minScale = 0.001,
+     this.maxScale = 5.6,
   }) {
     if (linePaint != null) {
       this.linePaint = linePaint;
@@ -114,14 +123,16 @@ class _OrgChartState<E> extends State<OrgChart<E>> {
   Widget build(BuildContext context) {
     Offset size = widget.controller.getSize();
     return InteractiveViewer(
+      transformationController: widget.transformationController,
       constrained: false,
-      boundaryMargin: const EdgeInsets.all(1000),
-      minScale: 0.001,
-      maxScale: 5.6,
+      minScale: widget.minScale,
+      maxScale: widget.maxScale,
+      alignment: Alignment.center,
       child: SizedBox(
         width: size.dx + 100,
         height: size.dy + 100,
         child: Stack(
+          key: UniqueKey(),
           clipBehavior: Clip.none,
           children: [
             CustomPaint(
