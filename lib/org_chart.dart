@@ -136,13 +136,19 @@ class _OrgChartState<E> extends State<OrgChart<E>> {
           key: UniqueKey(),
           clipBehavior: Clip.none,
           children: [
-            CustomPaint(
-              key: UniqueKey(),
-              size: MediaQuery.of(context).size,
-              painter: EdgePainter<E>(
-                controller: widget.controller,
-                linePaint: widget.linePaint,
-                cornerRadius: widget.cornerRadius,
+            Positioned(
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: CustomPaint(
+                key: UniqueKey(),
+                size: MediaQuery.of(context).size,
+                painter: EdgePainter<E>(
+                  controller: widget.controller,
+                  linePaint: widget.linePaint,
+                  cornerRadius: widget.cornerRadius,
+                ),
               ),
             ),
             ...draw(context)..sort((a, b) => a.isBeingDragged ? 1 : -1),
