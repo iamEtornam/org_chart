@@ -128,6 +128,7 @@ class _OrgChartState<E> extends State<OrgChart<E>> {
       minScale: widget.minScale,
       maxScale: widget.maxScale,
       alignment: Alignment.center,
+      boundaryMargin: const EdgeInsets.all(1000),
       child: SizedBox(
         width: size.dx + 100,
         height: size.dy + 100,
